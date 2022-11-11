@@ -20,7 +20,8 @@ app.use("/submits", require("./routes/submit"));
 app.use("/players", require("./routes/player"));
 
 //# START THE SERVER
-app.listen(88, () => console.log("listening at port 88...."));
+const port = process.env.PORT || 3000
+app.listen(port, () => console.log('listening at port ${port}...'));
 
 
 
