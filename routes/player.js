@@ -1,6 +1,5 @@
 const controller = require("../controllers/player");
 const { guest, admin } = require("../middleware/auth");
-
 const router = require("express").Router();
 
 router
