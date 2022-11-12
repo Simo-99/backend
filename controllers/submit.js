@@ -8,7 +8,6 @@ exports.getSubmit = async (req, res) => {
 
 }
 
-
 exports.updateSubmit = async (req, res) => {
 
     const submit = await Submit.findByPk(req.params.id);
@@ -17,6 +16,7 @@ exports.updateSubmit = async (req, res) => {
 
     res.send(submit);
 }
+
 exports.deleteSubmit = async (req, res) => {
 
     const submit = await Submit.findByPk(req.params.id);

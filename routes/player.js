@@ -6,9 +6,8 @@ const router = require("express").Router();
 router
     .get("", guest, controller.getPlayers)
     .get("/:id", guest, controller.getPlayer)
-// .get("/:id/submits", guest, controller.getSubmits)
-// .post("", admin, controller.storePlayer)
-// .put("/:id", admin, controller.updatePlayer)
-// .delete("/:id", admin, controller.deletePlayer);
+    .post("", admin, controller.storePlayer)
+    .put("/:id", admin, controller.updatePlayer)
+    .delete("/:id", admin, controller.deletePlayer);
 
 module.exports = router;

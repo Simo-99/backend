@@ -52,64 +52,32 @@ exports.getPlayers = async (req, res) => {
     else res.send(await Player.findAll());
 }
 
-exports.updateSubmit = async (req, res) => {
+exports.updatePlayer = async (req, res) => {
 
-    const submit = await Submit.findByPk(req.params.id);
+    const player = await Player.findByPk(req.params.id);
 
-    await submit.update(req.body);
+    await player.update(req.body);
 
-    res.send(submit);
+    res.send(player);
 }
-exports.deleteSubmit = async (req, res) => {
 
-    const submit = await Submit.findByPk(req.params.id);
+exports.deletePlayer = async (req, res) => {
 
-    await submit.destroy();
+    const player = await Player.findByPk(req.params.id);
+
+    await player.destroy();
+    await (await Table.findByPk(req.params.id)).destroy();
 
     res.sendStatus(200);
 
 }
 
-exports.storeSubmit = async (req, res) => {
+exports.storePlayer = async (req, res) => {
 
-    const day = new Date();
-    day.setMonth(day.getMonth() - 1);
-    const month_prev = day.getMonth();
-    const year_prev = day.getFullYear();
+    r = await Player.create(req.body);
 
-
-    var resources = parseInt(req.body.resources);
-    var points = parseInt(req.body.points);
-    var trophies = parseInt(req.body.trophies);
-    var id = req.body.player_id;
-
-    const lastMonthData = await Submit.findOne({ where: { player_id: id }, order: [["year", "DESC"], ["month", "DESC"]] });
-
-    new_resources = lastMonthData?.resources ? resources - lastMonthData.resources : resources;
-    new_points = lastMonthData?.points ? points - lastMonthData.resources : points;
-    new_trophies = lastMonthData?.trophies ? trophies - lastMonthData.trophies : trophies;
-
-    month = (req.body["month"] ? req.body["month"] : month_prev);
-    year = (req.body["year"] ? req.body["year"] : year_prev);
-
-
-
-    r = await Submit.create({
-        'month': month,
-        'year': year,
-        'player_id': id,
-        'resources': resources,
-        'points': points,
-        'new_resources': new_resources,
-        'new_points': new_points,
-        'trophies': trophies,
-        'new_trophies': new_trophies
-    });
+    await Table.create({ player: r.id, resources: 0, trophies: 0, points: 0 });
 
     res.send(r);
-    //! NEED TO CLEAN THE PLAYER'S ROW INTO THE TEMP TABLE ///
-    //!
-    //!
-    //!
-    //! //////////////////////////////////////////////////////
+
 }
