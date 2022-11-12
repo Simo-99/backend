@@ -17,6 +17,8 @@ app.use("/months", require("./routes/month"));
 //* LOADING YEARS ROUTES
 app.use("/years", require("./routes/year"));
 
+//* LOADING MONTHLY_DATA ROUTES
+app.use("/tables", require("./routes/table"));
 
 
 
