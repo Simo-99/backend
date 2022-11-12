@@ -1,10 +1,5 @@
-require('dotenv').config();
+const { Player, Submit, Table } = require("../models/load");
 
-const Player = require("../models/Players");
-const Submit = require("../models/Submits");
-
-Player.hasMany(Submit, { foreignKey: 'player_id' });
-Submit.belongsTo(Player, { foreignKey: 'player_id' });
 
 exports.getSubmit = async (req, res) => {
 
@@ -39,24 +34,20 @@ exports.storeSubmit = async (req, res) => {
     const month_prev = day.getMonth();
     const year_prev = day.getFullYear();
 
+    const resources = parseInt(req.body.resources);
+    const points = parseInt(req.body.points);
+    const trophies = parseInt(req.body.trophies);
+    const id = req.body.player_id;
 
-    var resources = parseInt(req.body.resources);
-    var points = parseInt(req.body.points);
-    var trophies = parseInt(req.body.trophies);
-    var id = req.body.player_id;
+    const lastMonthData = await Submit.findOne({ where: { player_id: id }, order: [["year", "DESC"], ["month", "DESC"]] });
 
-    lastMonthData = Submit.findOne({ where: { player_id: id }, order: [["id", "DESC"]] });
+    const new_resources = lastMonthData.resources ? resources - lastMonthData.resources : resources;
+    const new_points = lastMonthData.points ? points - lastMonthData.points : points;
+    const new_trophies = lastMonthData.trophies ? trophies - lastMonthData.trophies : trophies;
+    const month = req.body["month"] ? req.body["month"] : month_prev;
+    const year = req.body["year"] ? req.body["year"] : year_prev;
 
-    new_resources = lastMonthData?.resources ? resources - lastMonthData.resources : resources;
-    new_points = lastMonthData?.points ? points - lastMonthData.resources : points;
-    new_trophies = lastMonthData?.trophies ? trophies - lastMonthData.trophies : trophies;
-
-    month = (req.body["month"] ? req.body["month"] : month_prev);
-    year = (req.body["year"] ? req.body["year"] : year_prev);
-
-
-
-    r = Submit.create({
+    r = await Submit.create({
         'month': month,
         'year': year,
         'player_id': id,
@@ -68,10 +59,8 @@ exports.storeSubmit = async (req, res) => {
         'new_trophies': new_trophies
     });
 
+    await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
+
     res.send(r);
-    //! NEED TO CLEAN THE PLAYER'S ROW INTO THE TEMP TABLE ///
-    //!
-    //!
-    //!
-    //! //////////////////////////////////////////////////////
+
 }

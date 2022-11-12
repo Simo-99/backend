@@ -29,7 +29,6 @@ exports.login = async (req, res) => {
 
     res.json({ token: accessToken, user: { is_admin: user.is_admin } });
 
-
 }
 
 exports.logout = async (req, res) => {

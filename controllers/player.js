@@ -1,8 +1,4 @@
-const Player = require("../models/Players");
-const Submit = require("../models/Submits");
-
-Player.hasMany(Submit, { foreignKey: 'player_id' });
-Submit.belongsTo(Player, { foreignKey: 'player_id' });
+const { Player, Submit, Table } = require("../models/load");
 
 exports.getPlayer = async (req, res) => {
 
@@ -87,7 +83,7 @@ exports.storeSubmit = async (req, res) => {
     var trophies = parseInt(req.body.trophies);
     var id = req.body.player_id;
 
-    lastMonthData = Submit.findOne({ where: { player_id: id }, order: [["id", "DESC"]] });
+    const lastMonthData = await Submit.findOne({ where: { player_id: id }, order: [["year", "DESC"], ["month", "DESC"]] });
 
     new_resources = lastMonthData?.resources ? resources - lastMonthData.resources : resources;
     new_points = lastMonthData?.points ? points - lastMonthData.resources : points;
@@ -98,7 +94,7 @@ exports.storeSubmit = async (req, res) => {
 
 
 
-    r = Submit.create({
+    r = await Submit.create({
         'month': month,
         'year': year,
         'player_id': id,
