@@ -1,4 +1,3 @@
-const Token = require("./Tokens");
 const { DataTypes, Model } = require('sequelize');
 
 class User extends Model { }
