@@ -7,7 +7,7 @@ User.init({
     id: { primaryKey: true, type: DataTypes.INTEGER, autoIncrement: true },
     username: DataTypes.TEXT,
     password: DataTypes.TEXT,
-    is_admin: DataTypes.BOOLEAN,
+    is_admin: DataTypes.INTEGER,
     token_gen: DataTypes.TEXT,
 
 },
