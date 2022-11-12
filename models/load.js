@@ -2,10 +2,10 @@ const Player = require("./Players");
 const Submit = require("./Submits");
 const Table = require("./tables");
 
-Player.hasMany(Submit, { foreignKey: 'player_id' });
-Submit.belongsTo(Player, { foreignKey: 'player_id' });
+Player.hasMany(Submit, { as: "submits", foreignKey: 'player_id' });
+Submit.belongsTo(Player, { as: "player", foreignKey: 'player_id' });
 
-Player.hasOne(Table, { foreignKey: 'player' });
+Player.hasOne(Table, { as: "table", foreignKey: 'player' });
 Table.belongsTo(Player, { foreignKey: 'player' });
 
 

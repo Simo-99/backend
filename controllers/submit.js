@@ -3,7 +3,7 @@ const { Player, Submit, Table } = require("../models/load");
 
 exports.getSubmit = async (req, res) => {
 
-    if (req.query.p == 'yes') res.send(await Submit.findByPk(req.params.id, { include: Player }));
+    if (req.query.p == 'yes') res.send(await Submit.findByPk(req.params.id, { include: { model: Player, as: "player" } }));
     else res.send(await Submit.findByPk(req.params.id));
 
 }

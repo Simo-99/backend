@@ -17,7 +17,7 @@ exports.getWinners = async (req, res) => {
 
 
         const resources = await Submit.findAll({
-            include: { model: Player, attributes: ['id', 'name', 'color'] },
+            include: { model: Player, as: "player", attributes: ['id', 'name', 'color'] },
             where: { year: months[i].year, month: months[i].month },
             order: [["new_resources", "DESC"], ["new_points", "DESC"]],
             attributes: ["month", "year"],
@@ -25,7 +25,7 @@ exports.getWinners = async (req, res) => {
         })
 
         const points = await Submit.findAll({
-            include: { model: Player, attributes: ['id', 'name', 'color'] },
+            include: { model: Player, as: "player", attributes: ['id', 'name', 'color'] },
             where: { year: months[i].year, month: months[i].month },
             order: [["new_points", "DESC"], ["new_resources", "DESC"]],
             attributes: ["month", "year"],
