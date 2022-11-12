@@ -10,7 +10,7 @@ Player.init({
     name: DataTypes.STRING
 
 },
-    { sequelize: require('../database/db'), tableName: 'players' }
+    { sequelize: require('../config/db'), tableName: 'players' }
 
 );
 

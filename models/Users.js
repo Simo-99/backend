@@ -12,7 +12,7 @@ User.init({
     token_gen: DataTypes.TEXT,
 
 },
-    { sequelize: require('../database/db'), tableName: 'users', modelName: "User", defaultScope: { attributes: { exclude: ['password'] } } }
+    { sequelize: require('../config/db'), tableName: 'users', modelName: "User", defaultScope: { attributes: { exclude: ['password'] } } }
 
 );
 

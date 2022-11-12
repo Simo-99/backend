@@ -16,7 +16,7 @@ Submit.init({
     trophies: DataTypes.INTEGER,
     new_trophies: DataTypes.INTEGER,
 },
-    { sequelize: require('../database/db'), tableName: 'submits' }
+    { sequelize: require('../config/db'), tableName: 'submits' }
 
 );
 
