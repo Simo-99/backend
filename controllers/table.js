@@ -1,4 +1,4 @@
-const { Player, Submit, Table } = require("../models/load");
+const { Player, Table } = require("../models/load");
 
 
 exports.getTable = async (req, res) => {
@@ -31,3 +31,7 @@ exports.getTables = async (req, res) => {
     ));
 
 }
+
+
+
+

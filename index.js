@@ -20,6 +20,9 @@ app.use("/years", require("./routes/year"));
 //* LOADING MONTHLY_DATA ROUTES
 app.use("/tables", require("./routes/table"));
 
+//* LOADING SPECIAL ROUTES
+app.use(require("./routes/extra"));
+
 
 
 //# START THE SERVER
