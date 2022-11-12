@@ -20,14 +20,14 @@ exports.getWinners = async (req, res) => {
             include: { model: Player, as: "player", attributes: ['id', 'name', 'color'] },
             where: { year: months[i].year, month: months[i].month },
             order: [["new_resources", "DESC"], ["new_points", "DESC"]],
-            attributes: ["month", "year"]
+            attributes: ["month", "year", "new_resources"]
         })
 
         const points = await Submit.findOne({
             include: { model: Player, as: "player", attributes: ['id', 'name', 'color'] },
             where: { year: months[i].year, month: months[i].month },
             order: [["new_points", "DESC"], ["new_resources", "DESC"]],
-            attributes: ["month", "year"]
+            attributes: ["month", "year", "new_points"]
         })
 
 
