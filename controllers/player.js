@@ -47,7 +47,7 @@ exports.getPlayer = async (req, res) => {
 
 exports.getPlayers = async (req, res) => {
 
-    const players = [];
+    var players = [];
 
     if (req.query.s == 'hidden') players = await Player.findAll({ where: { inside: 0 } });
     else if (req.query.s == 'active') players = await Player.findAll({ where: { inside: 1 } });
