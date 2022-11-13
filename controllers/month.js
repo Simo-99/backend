@@ -21,12 +21,13 @@ exports.pastMonths = async function (req, res) {
 exports.getMonth = async (req, res) => {
 
     var returned = {};
-    if (req.query.y == null) return res.sendStatus(200).json("year is required");
-
+    if (req.query.y == null) { res.sendStatus(404); return; }
 
     const submits = await s.query("select month, year, submits.id, resources, new_resources, points, new_points, trophies, new_trophies, name, color, player_id FROM submits inner join players on players.id=submits.player_id where month=" + req.params.month + " and year=" + req.query.y + " order by name", { type: sequelize.QueryTypes.SELECT });
 
-    if (submits.length < 1) { return res.sendStatus(200).json({ "error": "this month has no submit" }) }
+    if (submits.length < 1) { res.sendStatus(404); return; }
+
+    console.log(req.url);
 
     if (req.query.o === "r") submits.sort((a, b) => parseFloat(b.new_resources) - parseFloat(a.new_resources));
     else if (req.query.o === "p") submits.sort((a, b) => parseFloat(b.new_points) - parseFloat(a.new_points));
@@ -47,7 +48,7 @@ exports.getMonth = async (req, res) => {
 
     req.query.best == "yes" ? returned.submit = submits[0] : returned.submits = submits;
 
-    return res.send(returned);
+    res.send(returned);
 
 
 }
