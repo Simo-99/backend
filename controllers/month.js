@@ -27,8 +27,6 @@ exports.getMonth = async (req, res) => {
 
     if (submits.length < 1) { res.sendStatus(204); return; }
 
-    console.log(req.url);
-
     if (req.query.o === "r") submits.sort((a, b) => parseFloat(b.new_resources) - parseFloat(a.new_resources));
     else if (req.query.o === "p") submits.sort((a, b) => parseFloat(b.new_points) - parseFloat(a.new_points));
     else if (req.query.o === "t") submits.sort((a, b) => parseFloat(b.new_trophies) - parseFloat(a.new_trophies));
