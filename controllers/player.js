@@ -47,10 +47,19 @@ exports.getPlayer = async (req, res) => {
 
 exports.getPlayers = async (req, res) => {
 
-    if (req.query.s == 'hidden') res.send(await Player.findAll({ where: { inside: 0 } }));
-    else if (req.query.s == 'active') res.send(await Player.findAll({ where: { inside: 1 } }));
-    else res.send(await Player.findAll());
+    const players = [];
+
+    if (req.query.s == 'hidden') players = await Player.findAll({ where: { inside: 0 } });
+    else if (req.query.s == 'active') players = await Player.findAll({ where: { inside: 1 } });
+    else players = await Player.findAll();
+
+    if (req.query.o == "asc") players.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+    else if (req.query.o == "desc") players.sort((a, b) => (a.name > b.name) ? -1 : ((b.name > a.name) ? 1 : 0))
+
+    res.send(players);
+
 }
+
 
 exports.updatePlayer = async (req, res) => {
 
