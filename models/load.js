@@ -6,7 +6,7 @@ Player.hasMany(Submit, { as: "submits", foreignKey: 'player_id' });
 Submit.belongsTo(Player, { as: "player", foreignKey: 'player_id' });
 
 Player.hasOne(Table, { as: "table", foreignKey: 'player' });
-Table.belongsTo(Player, { foreignKey: 'player' });
+Table.belongsTo(Player, { as: "player", foreignKey: 'player' });
 
 
 module.exports = { Player, Submit, Table };
