@@ -53,8 +53,8 @@ exports.getPlayers = async (req, res) => {
     else if (req.query.s == 'active') players = await Player.findAll({ where: { inside: 1 } });
     else players = await Player.findAll();
 
-    if (req.query.o == "asc") players.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
-    else if (req.query.o == "desc") players.sort((a, b) => (a.name > b.name) ? -1 : ((b.name > a.name) ? 1 : 0))
+    if (req.query.o == "asc") players.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))
+    else if (req.query.o == "desc") players.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? -1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : 0))
 
     res.send(players);
 
