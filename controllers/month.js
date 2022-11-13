@@ -47,7 +47,7 @@ exports.getMonth = async (req, res) => {
 
     req.query.best == "yes" ? returned.submit = submits[0] : returned.submits = submits;
 
-    res.send(returned);
+    return res.send(returned);
 
 
 }
