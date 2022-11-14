@@ -21,7 +21,7 @@ exports.getYear = async (req, res) => {
 
     var returned = {};
 
-    returned.submits = await Submit.findOne({
+    returned.submits = await Submit.findAll({
         group: ['month', "year"],
         attributes: ['month', 'year',
             [sequelize.fn('SUM', sequelize.col('new_resources')), 'resources'],
