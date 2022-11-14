@@ -29,9 +29,9 @@ exports.getMonth = async (req, res) => {
 
     if (req.query.o === "r") submits.sort((a, b) => parseFloat(b.new_resources) - parseFloat(a.new_resources));
     else if (req.query.o === "p") submits.sort((a, b) => parseFloat(b.new_points) - parseFloat(a.new_points));
-    else if (req.query.o === "t") submits.sort((a, b) => parseFloat(b.new_trophies) - parseFloat(a.new_trophies));
+    else if (req.query.o === "t") submits.sort((a, b) => parseFloat(b.new_trophies) - parseFloat(a.new_trophies))
 
-    if (req.query.t == "yes")
+    if (req.query.t === "yes")
         returned.totals = await Submit.findOne({
             group: ['month'],
             attributes: ['month',
@@ -44,7 +44,7 @@ exports.getMonth = async (req, res) => {
         });
 
 
-    req.query.best == "yes" ? returned = submits[0] : returned = submits;
+    req.query.best === "yes" ? returned = submits[0] : returned.submits = submits;
 
     res.send(returned);
 
