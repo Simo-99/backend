@@ -33,7 +33,8 @@ exports.getYear = async (req, res) => {
 
     });
 
-    if (returned.submits.length < 1) { return res.end({ "error": "this year has no submit" }) }
+
+    if (returned.submits.length < 1) { res.end({ "error": "this year has no submit" }); return; }
 
     if (req.query.t == "yes")
         returned.totals = await Submit.findOne({
@@ -48,7 +49,7 @@ exports.getYear = async (req, res) => {
         });
 
 
-    res.send(returned);
+    res.json(returned);
 
 
 }
