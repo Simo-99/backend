@@ -49,7 +49,7 @@ exports.helper = async (req, res, next) => {
 async function check_expiration(jwt_token, token_gen) {
 
     await jwt.verify(jwt_token, token_gen, (err) => {
-        if (err) { token_db.destroy(); return false; }
+        if (err) { token_db.destroy(); console.log("something went wrong"); return false; }
     });
 
     return true
