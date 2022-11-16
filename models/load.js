@@ -1,6 +1,7 @@
 const Player = require("./Players");
 const Submit = require("./Submits");
 const Table = require("./tables");
+const User = require("./Users");
 
 Player.hasMany(Submit, { as: "submits", foreignKey: 'player_id' });
 Submit.belongsTo(Player, { as: "player", foreignKey: 'player_id' });
@@ -9,4 +10,4 @@ Player.hasOne(Table, { as: "table", foreignKey: 'player' });
 Table.belongsTo(Player, { foreignKey: 'player' });
 
 
-module.exports = { Player, Submit, Table };
+module.exports = { Player, Submit, Table, User };

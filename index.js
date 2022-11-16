@@ -2,6 +2,9 @@
 const app = require('./config/server');
 
 
+//? LOADING USERS ROUTES
+app.use("/users", require("./routes/user"));
+
 //* LOADING LOGIN AND LOGOUT ROUTES
 app.use(require("./routes/auth"));
 
