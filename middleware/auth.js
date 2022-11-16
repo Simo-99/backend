@@ -1,9 +1,6 @@
 const jwt = require('jsonwebtoken');
-const User = require("../models/Users");
-const Token = require("../models/Tokens");
+const { User, Token } = require("../models/load");
 
-User.hasMany(Token, { foreignKey: 'user_id' })
-Token.belongsTo(User, { foreignKey: 'user_id' })
 
 exports.guest = async (req, res, next) => {
 
