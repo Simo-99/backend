@@ -36,7 +36,7 @@ exports.logout = async (req, res) => {
     const auth = req.headers["authorization"];
     const token = auth && auth.split(" ")[1];
 
-    Token.findOne({ where: { token: token } }).destroy();
+    (await Token.findOne({ where: { token: token } })).destroy();
     res.sendStatus(200);
 }
 
