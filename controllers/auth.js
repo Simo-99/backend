@@ -37,6 +37,6 @@ exports.logout = async (req, res) => {
     const token = auth && auth.split(" ")[1];
 
     Token.findOne({ where: { token: token } }).destroy();
-
+    res.sendStatus(200);
 }
 
