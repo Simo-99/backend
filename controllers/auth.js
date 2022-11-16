@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
     await Token.create({ user_id: user.id, token: accessToken })
 
 
-    return res.json({ token: accessToken, user: { is_admin: user.is_admin } });
+    return res.json({ token: accessToken, user: { role: user.role } });
 
 }
 

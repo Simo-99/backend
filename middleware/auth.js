@@ -32,7 +32,7 @@ exports.admin = async (req, res, next) => {
     if (token == null) return res.sendStatus(401);
 
     const token_db = await Token.findOne({ where: { token: token }, include: User });
-    if (token_db == null || token_db.User.is_admin < 2) return res.sendStatus(401).json();
+    if (token_db == null || token_db.User.role < 2) return res.sendStatus(401).json();
 
 
     jwt.verify(token, token_db.User.token_gen, (err, user) => {
@@ -53,7 +53,7 @@ exports.helper = async (req, res, next) => {
     if (token == null) return res.sendStatus(401);
 
     const token_db = await Token.findOne({ where: { token: token }, include: User });
-    if (token_db == null || token_db.User.is_admin < 1) return res.sendStatus(401).json();
+    if (token_db == null || token_db.User.role < 1) return res.sendStatus(401).json();
 
     jwt.verify(token, token_db.User.token_gen, (err, user) => {
         if (err) {
