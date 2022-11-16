@@ -11,7 +11,7 @@ exports.guest = async (req, res, next) => {
     const token_db = await Token.findOne({ where: { token: token }, include: { model: User, as: "user" } });
     if (token_db == null) return res.sendStatus(401).json();
 
-    if (check_expiration(token, token_db.user.token_gen)) { next(); return; }
+    if (check_expiration(token, token_db)) { next(); return; }
     else res.send(err.message)
 
 }
@@ -26,7 +26,7 @@ exports.admin = async (req, res, next) => {
     if (token_db == null || token_db.user.role < 2) return res.sendStatus(401).json();
 
 
-    if (check_expiration(token, token_db.user.token_gen)) { next(); return; }
+    if (check_expiration(token, token_db)) { next(); return; }
     else res.send(err.message)
 
 }
@@ -40,15 +40,15 @@ exports.helper = async (req, res, next) => {
     const token_db = await Token.findOne({ where: { token: token }, include: User });
     if (token_db == null || token_db.user.role < 1) return res.sendStatus(401).json();
 
-    if (check_expiration(token, token_db.user.token_gen)) { next(); return; }
+    if (check_expiration(token, token_db)) { next(); return; }
     else res.send(err.message)
 
 }
 
 
-async function check_expiration(jwt_token, token_gen) {
+async function check_expiration(jwt_token, token_db) {
 
-    await jwt.verify(jwt_token, token_gen, (err) => {
+    await jwt.verify(jwt_token, token_db.user.token_gen, (err) => {
         if (err) { token_db.destroy(); console.log("something went wrong"); return false; }
     });
 
