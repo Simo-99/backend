@@ -11,14 +11,8 @@ exports.guest = async (req, res, next) => {
     const token_db = await Token.findOne({ where: { token: token }, include: { model: User, as: "user" } });
     if (token_db == null) return res.sendStatus(401).json();
 
-    jwt.verify(token, token_db.user.token_gen, (err, user) => {
-        if (err) {
-            token_db.destroy();
-            res.send(err.message)
-
-        }
-        else next();
-    });
+    if (check_expiration(token, token_db.user.token_gen)) { next(); return; }
+    else res.send(err.message)
 
 }
 
@@ -32,14 +26,8 @@ exports.admin = async (req, res, next) => {
     if (token_db == null || token_db.user.role < 2) return res.sendStatus(401).json();
 
 
-    jwt.verify(token, token_db.user.token_gen, (err, user) => {
-        if (err) {
-            token_db.destroy();
-            res.send(err.message)
-
-        }
-        else next();
-    });
+    if (check_expiration(token, token_db.user.token_gen)) { next(); return; }
+    else res.send(err.message)
 
 }
 
@@ -52,13 +40,18 @@ exports.helper = async (req, res, next) => {
     const token_db = await Token.findOne({ where: { token: token }, include: User });
     if (token_db == null || token_db.user.role < 1) return res.sendStatus(401).json();
 
-    jwt.verify(token, token_db.user.token_gen, (err, user) => {
-        if (err) {
-            token_db.destroy();
-            res.send(err.message)
+    if (check_expiration(token, token_db.user.token_gen)) { next(); return; }
+    else res.send(err.message)
 
-        }
-        else next();
+}
+
+
+async function check_expiration(jwt_token, token_gen) {
+
+    await jwt.verify(jwt_token, token_gen, (err) => {
+        if (err) { token_db.destroy(); return false; }
     });
+
+    return true
 
 }
