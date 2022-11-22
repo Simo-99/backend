@@ -23,7 +23,7 @@ exports.getTables = async (req, res) => {
             where: { inside: 1 }
 
         },
-        order: ["player"]
+        order: ["name"]
 
     }
 
