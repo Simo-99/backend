@@ -20,10 +20,10 @@ exports.getTables = async (req, res) => {
     res.send(await Table.findAll({
         include: {
             model: Player,
-            where: { inside: 1 }
+            where: { inside: 1 },
 
         },
-        order: ["player.name"]
+        order: [[Player, "name", "ASC"]]
 
     }
 
