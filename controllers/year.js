@@ -38,8 +38,8 @@ exports.getYear = async (req, res) => {
 
     if (req.query.t == "yes")
         returned.totals = await Submit.findOne({
-            group: ['year', 'month'],
-            attributes: ['month',
+            group: ['year'],
+            attributes: [
                 [sequelize.fn('SUM', sequelize.col('new_resources')), 'resources'],
                 [sequelize.fn('SUM', sequelize.col('new_points')), 'points'],
                 [sequelize.fn('SUM', sequelize.col('new_trophies')), 'trophies']
