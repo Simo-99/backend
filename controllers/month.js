@@ -23,7 +23,7 @@ exports.getMonth = async (req, res) => {
     var returned = {};
     if (req.query.y == null) { res.sendStatus(400); return; }
 
-    const submits = await s.query("select month, year, submits.id, resources, new_resources, points, new_points, trophies, new_trophies, name, color, player_id FROM submits inner join players on players.id=submits.player_id where month=" + req.params.month + " and year=" + req.query.y + " order by name", { type: sequelize.QueryTypes.SELECT });
+    const submits = await s.query("select month, year, submits.id, resources, new_resources, points, new_points, trophies, new_trophies, name, color, player_id FROM submits inner join players on players.id=submits.player_id where month=" + req.params.month + " and year=" + req.query.y + " order by lower(name)", { type: sequelize.QueryTypes.SELECT });
 
     if (submits.length < 1) { res.sendStatus(204); return; }
 
