@@ -1,4 +1,5 @@
 const { Player, Table } = require("../models/load");
+const sequelize = require("sequelize");
 
 
 exports.getTable = async (req, res) => {
@@ -23,7 +24,7 @@ exports.getTables = async (req, res) => {
             where: { inside: 1 },
 
         },
-        order: 'lower(Player.name) ASC'
+        order: [[Player, Sequelize.fn('lower', Sequelize.col('name')), "ASC"]]
 
     }
 
