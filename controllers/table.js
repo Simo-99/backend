@@ -24,7 +24,7 @@ exports.getTables = async (req, res) => {
             where: { inside: 1 },
 
         },
-        order: [[Player, Sequelize.fn('lower', Sequelize.col('name')), "ASC"]]
+        order: [[Player, sequelize.fn('lower', sequelize.col('name')), "ASC"]]
 
     }
 
