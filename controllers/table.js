@@ -20,6 +20,7 @@ exports.updateTable = async (req, res) => {
 exports.getTables = async (req, res) => {
 
     const tables = s.query("select * FROM monthly_data INNER JOIN players ON player = players.id WHERE players.inside = 1 order by lower(name)", { type: sequelize.QueryTypes.SELECT });
+    console.log(tables);
     res.send(tables);
 
 }
