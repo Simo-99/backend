@@ -41,9 +41,9 @@ exports.storeSubmit = async (req, res) => {
 
     const lastMonthData = await Submit.findOne({ where: { player_id: id }, order: [["year", "DESC"], ["month", "DESC"]] });
 
-    const new_resources = lastMonthData.resources ? resources - lastMonthData.resources : resources;
-    const new_points = lastMonthData.points ? points - lastMonthData.points : points;
-    const new_trophies = lastMonthData.trophies ? trophies - lastMonthData.trophies : trophies;
+    const new_resources = lastMonthData?.resources ? resources - lastMonthData.resources : resources;
+    const new_points = lastMonthData?.points ? points - lastMonthData.points : points;
+    const new_trophies = lastMonthData?.trophies ? trophies - lastMonthData.trophies : trophies;
     const month = req.body["month"] ? req.body["month"] : month_prev;
     const year = req.body["year"] ? req.body["year"] : year_prev;
 
