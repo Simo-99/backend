@@ -59,7 +59,7 @@ exports.storeSubmit = async (req, res) => {
         'new_trophies': new_trophies
     });
 
-    //await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
+    await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
 
     res.send(r);
 
