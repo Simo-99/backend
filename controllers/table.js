@@ -1,5 +1,6 @@
 const { Player, Table } = require("../models/load");
-const s = require("sequelize");
+const sequelize = require("sequelize");
+const s = require("../config/db");
 
 
 exports.getTable = async (req, res) => {
@@ -18,7 +19,7 @@ exports.updateTable = async (req, res) => {
 
 exports.getTables = async (req, res) => {
 
-    const tables = s.query("select * FROM monthly_data INNER JOIN players ON player = players.id WHERE players.inside = 1 order by lower(name)", { type: s.QueryTypes.SELECT });
+    const tables = s.query("select * FROM monthly_data INNER JOIN players ON player = players.id WHERE players.inside = 1 order by lower(name)", { type: sequelize.QueryTypes.SELECT });
     res.send(tables);
 
 }
