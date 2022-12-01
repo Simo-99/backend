@@ -1,5 +1,5 @@
 const { Player, Table } = require("../models/load");
-const sequelize = require("sequelize");
+const s = require("sequelize");
 
 
 exports.getTable = async (req, res) => {
