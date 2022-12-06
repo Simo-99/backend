@@ -29,35 +29,31 @@ exports.deleteSubmit = async (req, res) => {
 
 exports.storeSubmit = async (req, res) => {
 
-    const day = new Date();
-    day.setMonth(day.getMonth() - 1);
-    const month_prev = day.getMonth();
-    const year_prev = day.getFullYear();
+    var submit = { month: 0, year: 0, player_id: 0, resources: 0, points: 0, trophies: 0, new_resources: 0, new_points: 0, new_trophies: 0 }
 
-    const resources = parseInt(req.body.resources);
-    const points = parseInt(req.body.points);
-    const trophies = parseInt(req.body.trophies);
+    const new_resources = parseInt(req.body.resources);
+    const new_points = parseInt(req.body.points);
+    const new_trophies = parseInt(req.body.trophies);
     const id = req.body.player_id;
 
     const lastMonthData = await Submit.findOne({ where: { player_id: id }, order: [["year", "DESC"], ["month", "DESC"]] });
+    const player = await Player.findOne({ where: { id: id } });
 
-    const new_resources = lastMonthData?.resources ? resources - lastMonthData.resources : resources;
-    const new_points = lastMonthData?.points ? points - lastMonthData.points : points;
-    const new_trophies = lastMonthData?.trophies ? trophies - lastMonthData.trophies : trophies;
-    const month = req.body["month"] ? req.body["month"] : month_prev;
-    const year = req.body["year"] ? req.body["year"] : year_prev;
+    const last_res = lastMonthData?.resources ? lastMonthData.resources : player.start_res;
+    const last_points = lastMonthData?.points ? lastMonthData.points : player.start_points;
+    const last_trophies = lastMonthData?.trophies ? lastMonthData.trophies : player.start_trophies;
 
-    r = await Submit.create({
-        'month': month,
-        'year': year,
-        'player_id': id,
-        'resources': resources,
-        'points': points,
-        'new_resources': new_resources,
-        'new_points': new_points,
-        'trophies': trophies,
-        'new_trophies': new_trophies
-    });
+    submit.resources = new_resources;
+    submit.trophies = new_trophies;
+    submit.points = new_points;
+    submit.new_resources = new_resources - last_res;
+    submit.new_trophies = new_trophies - last_trophies;
+    submit.new_points = new_points - last_points;
+    submit.month = req.body.month;
+    submit.year = req.body.year;
+    submit.player_id = id;
+
+    const r = await Submit.create(submit);
 
     await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
 
