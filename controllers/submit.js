@@ -47,9 +47,9 @@ exports.storeSubmit = async (req, res) => {
     submit.resources = new_resources;
     submit.trophies = new_trophies;
     submit.points = new_points;
-    submit.new_resources = lastMonthData?.resources ? (new_resources - last_res) : (new_resources - last_res) / (days_inside) * 30;
-    submit.new_trophies = lastMonthData?.trophies ? (new_trophies - last_trophies) : (new_trophies - last_trophies) / (days_inside) * 30;
-    submit.new_points = lastMonthData?.points ? (new_points - last_points) : (new_points - last_points) / (days_inside) * 30;
+    submit.new_resources = Math.round(lastMonthData?.resources ? (new_resources - last_res) : (new_resources - last_res) / (days_inside) * 30);
+    submit.new_trophies = Math.round(lastMonthData?.trophies ? (new_trophies - last_trophies) : (new_trophies - last_trophies) / (days_inside) * 30);
+    submit.new_points = Math.round(lastMonthData?.points ? (new_points - last_points) : (new_points - last_points) / (days_inside) * 30);
     submit.month = req.body.month;
     submit.year = req.body.year;
     submit.player_id = id;
