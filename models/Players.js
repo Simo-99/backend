@@ -7,6 +7,10 @@ Player.init({
     id: { primaryKey: true, type: DataTypes.INTEGER, autoIncrement: true },
     color: { type: DataTypes.STRING, defaultValue: "#000000" },
     inside: { type: DataTypes.INTEGER, defaultValue: 1 },
+    start_res: { type: DataTypes.INTEGER, defaultValue: 0 },
+    start_points: { type: DataTypes.INTEGER, defaultValue: 0 },
+    start_trophies: { type: DataTypes.INTEGER, defaultValue: 0 },
+
     name: DataTypes.STRING
 
 },
