@@ -42,13 +42,14 @@ exports.storeSubmit = async (req, res) => {
     const last_res = lastMonthData?.resources ? lastMonthData.resources : player.start_res;
     const last_points = lastMonthData?.points ? lastMonthData.points : player.start_points;
     const last_trophies = lastMonthData?.trophies ? lastMonthData.trophies : player.start_trophies;
+    const days_inside = Math.round((Date.parse(new Date().toJSON().slice(0, 10)) - Date.parse(player.date)) / (1000 * 60 * 60 * 24))
 
     submit.resources = new_resources;
     submit.trophies = new_trophies;
     submit.points = new_points;
-    submit.new_resources = new_resources - last_res;
-    submit.new_trophies = new_trophies - last_trophies;
-    submit.new_points = new_points - last_points;
+    submit.new_resources = lastMonthData?.resources ? (new_resources - last_res) : (new_resources - last_res) / (days_inside) * 30;
+    submit.new_trophies = lastMonthData?.trophies ? (new_trophies - last_trophies) : (new_trophies - last_trophies) / (days_inside) * 30;
+    submit.new_points = lastMonthData?.points ? (new_points - last_points) : (new_points - last_points) / (days_inside) * 30;
     submit.month = req.body.month;
     submit.year = req.body.year;
     submit.player_id = id;
