@@ -21,11 +21,11 @@ exports.pastMonths = async function (req, res) {
 exports.getMonth = async (req, res) => {
 
     var returned = {};
-    if (req.query.y == null) { res.sendStatus(400); return; }
+    if (req.query.y == null) return res.sendStatus(400)
 
     const submits = await s.query("select month, year, submits.id, resources, new_resources, points, new_points, trophies, new_trophies, name, color, player_id FROM submits inner join players on players.id=submits.player_id where month=" + req.params.month + " and year=" + req.query.y + " order by lower(name)", { type: sequelize.QueryTypes.SELECT });
 
-    if (submits.length < 1) { res.sendStatus(204); return; }
+    if (submits.length < 1) return res.sendStatus(400)
 
     if (req.query.t === "yes")
         returned.totals = await Submit.findOne({
