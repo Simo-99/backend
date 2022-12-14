@@ -21,6 +21,8 @@ exports.getYear = async (req, res) => {
 
     var returned = {};
 
+    if (req.params.year == null) { return res.sendStatus(400); }
+
     returned.submits = await Submit.findAll({
         group: ['month', "year"],
         attributes: ['month', 'year',
@@ -34,7 +36,7 @@ exports.getYear = async (req, res) => {
     });
 
 
-    if (returned.submits.length < 1) { res.end({ "error": "this year has no submit" }); return; }
+    if (returned?.submits.length < 1) { return res.sendStatus(200); }
 
     if (req.query.t == "yes")
         returned.totals = await Submit.findOne({
