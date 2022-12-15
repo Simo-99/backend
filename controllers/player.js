@@ -67,7 +67,7 @@ exports.updatePlayer = async (req, res) => {
     const player = await Player.findByPk(req.params.id);
 
     if (req.body.wrong_names != null) req.body.wrong_names = req.body.wrong_names.join(",")
-    console.log(req.body.wrong_names)
+
     await player.update(req.body);
 
     res.send(player);
