@@ -93,7 +93,7 @@ exports.storePlayer = async (req, res) => {
 exports.getAkas = async (req, res) => {
 
 
-    var players = await Player.findAll({ attributes: ['id', 'name', 'akas'] });;
+    var players = await Player.findAll({ attributes: ['id', 'name', 'akas'], where: { inside: 1 } });;
 
     res.send(players);
 
