@@ -7,7 +7,7 @@ router
     .post("", admin, controller.storePlayer)
     .put("/:id", admin, controller.updatePlayer)
     .delete("/:id", admin, controller.deletePlayer)
-    .get("/akas", admin, controller.getAkas)
+    .get("/akas", controller.getAkas)
     .get("/:id", guest, controller.getPlayer)
 
 module.exports = router;
