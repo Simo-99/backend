@@ -95,14 +95,11 @@ exports.getAkas = async (req, res) => {
 
     const players = await Player.findAll({ attributes: ['name', 'wrong_names'], where: { inside: 1 } });;
 
-    var returned = []
+    var returned = await players.forEach(element => {
 
-    await players.forEach(element => {
+        returned[element.name] = element.wrong_names.split(",")
 
-        key = element.name;
-        returned[key] = element.wrong_names.split(",")
-
-    });
+    })
 
 
     res.send(returned);
