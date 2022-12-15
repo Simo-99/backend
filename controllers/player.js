@@ -97,13 +97,12 @@ exports.getAkas = async (req, res) => {
 
     var returned = []
 
-    players.forEach(element => {
+    await players.forEach(element => {
 
         key = element.name;
         returned[key] = element.wrong_names.split(",")
 
     });
-    console.log(returned);
 
 
     res.send(returned);
