@@ -93,8 +93,17 @@ exports.storePlayer = async (req, res) => {
 exports.getAkas = async (req, res) => {
 
 
-    var players = await Player.findAll({ attributes: ['id', 'name', 'wrong_names'], where: { inside: 1 } });;
+    const players = await Player.findAll({ attributes: ['name', 'wrong_names'], where: { inside: 1 } });;
 
-    res.send(players);
+    var returned = []
+
+    players.forEach((element, count) => {
+
+        key = element.name;
+        returned[key] = element.wrong_names.split(",")
+    });
+
+
+    res.send(returned);
 
 }
