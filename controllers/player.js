@@ -4,6 +4,8 @@ exports.getPlayer = async (req, res) => {
 
     p = await Player.findByPk(req.params.id);
 
+    p.wrong_names = p.wrong_names.split(",")
+
     if (req.query.s == "yes") {
         submits = await Submit.findAll({ where: { player_id: p.id }, order: [['year', 'DESC'], ['month', 'DESC']], raw: true });
 
