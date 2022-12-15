@@ -89,3 +89,12 @@ exports.storePlayer = async (req, res) => {
     res.send(r);
 
 }
+
+exports.getAkas = async (req, res) => {
+
+
+    var players = await Player.findAll({ attributes: ['name', 'akas'] });;
+
+    res.send(players);
+
+}

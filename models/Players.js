@@ -11,7 +11,7 @@ Player.init({
     start_points: { type: DataTypes.INTEGER, defaultValue: 0 },
     start_trophies: { type: DataTypes.INTEGER, defaultValue: 0 },
     date: { type: DataTypes.STRING },
-
+    akas: { type: DataTypes.STRING, default: "" },
     name: DataTypes.STRING
 
 },
