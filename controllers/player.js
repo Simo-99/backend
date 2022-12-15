@@ -103,7 +103,7 @@ exports.getAkas = async (req, res) => {
 
     })
 
-
+    returned.forEach(element => { console.log(element) })
     res.send(returned);
 
 }
