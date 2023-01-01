@@ -65,6 +65,7 @@ exports.storeSubmit = async (req, res) => {
 
 exports.confirmTables = async (req, res) => {
 
+    if (req.body.month == null || req.body.year == null) return res.sendStatus(400)
     const actives = await Player.findAll({ where: { inside: 1 } })
 
     actives.map(async (active) => {
