@@ -97,10 +97,10 @@ exports.confirmTables = async (req, res) => {
         submit.year = req.body.year;
         submit.player_id = id;
 
-        const r = await Submit.create(submit);
-
-        //await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
-
+        if (submit.resources > 0 && submit.trophies > 0 && submit.points > 0) {
+            await Submit.create(submit);
+            await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
+        }
 
 
     })
