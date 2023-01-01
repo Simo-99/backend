@@ -56,7 +56,7 @@ exports.storeSubmit = async (req, res) => {
 
     const r = await Submit.create(submit);
 
-    await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
+    //await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
 
     res.send(r);
 
