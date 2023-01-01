@@ -61,3 +61,52 @@ exports.storeSubmit = async (req, res) => {
     res.send(r);
 
 }
+
+
+exports.confirmTables = async (req, res) => {
+
+    const actives = await Player.findAll({ where: { inside: 1 } })
+
+    actives.map(async (active) => {
+
+        const submitToSave = await Table.findByPk(active.id)
+
+        const new_resources = submitToSave.resources
+        const new_points = submitToSave.points;
+        const new_trophies = submitToSave.trophies;
+        const id = submitToSave.player;
+
+        const lastMonthData = await Submit.findOne({ where: { player_id: id }, order: [["year", "DESC"], ["month", "DESC"]] });
+        const player = await Player.findOne({ where: { id: id } });
+
+        const last_res = lastMonthData?.resources ? lastMonthData.resources : player.start_res;
+        const last_points = lastMonthData?.points ? lastMonthData.points : player.start_points;
+        const last_trophies = lastMonthData?.trophies ? lastMonthData.trophies : player.start_trophies;
+        const days_inside = Math.round((Date.parse(new Date().toJSON().slice(0, 10)) - Date.parse(player.date)) / (1000 * 60 * 60 * 24))
+
+        var submit = {}
+
+        submit.resources = new_resources;
+        submit.trophies = new_trophies;
+        submit.points = new_points;
+        submit.new_resources = Math.round(lastMonthData?.resources ? (new_resources - last_res) : (new_resources - last_res) / (days_inside) * 30);
+        submit.new_trophies = Math.round(lastMonthData?.trophies ? (new_trophies - last_trophies) : (new_trophies - last_trophies) / (days_inside) * 30);
+        submit.new_points = Math.round(lastMonthData?.points ? (new_points - last_points) : (new_points - last_points) / (days_inside) * 30);
+        submit.month = req.body.month;
+        submit.year = req.body.year;
+        submit.player_id = id;
+
+        const r = await Submit.create(submit);
+
+        //await (await Table.findByPk(id)).update({ resources: 0, trophies: 0, points: 0 });
+
+
+
+    })
+
+
+
+    res.sendStatus(200);
+
+
+}
