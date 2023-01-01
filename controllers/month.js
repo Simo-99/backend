@@ -45,7 +45,8 @@ exports.getMonth = async (req, res) => {
         returned.winner_p = submits.sort((a, b) => parseFloat(b.new_points) - parseFloat(a.new_points))[0]
         returned.winner_t = submits.sort((a, b) => parseFloat(b.new_trophies) - parseFloat(a.new_trophies))[0]
     }
-    returned.submits = submits
+
+    returned.submits = submits.sort((a, b) => parseFloat(b.player_id) - parseFloat(a.player_id)).reverse()
 
 
     res.send(returned);
