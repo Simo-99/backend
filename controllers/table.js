@@ -38,8 +38,8 @@ exports.saveTables= async(req,res)=>{
         const points=player[2]
         const trophies=player[3]
 
-        const playerToUpdate= await Player.findOne({where: {name: name}})
-        await (await Table.findByPk(playerToUpdate.id)).update({resources: res,points: points,trophies:trophies})
+        const playerToUpdate= await Player.findOne({where: {name: name,inside:1}})
+        if (playerToUpdate != null ) await (await Table.findByPk(playerToUpdate.id)).update({resources: res,points: points,trophies:trophies})
 
 
 
