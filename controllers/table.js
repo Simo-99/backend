@@ -25,5 +25,27 @@ exports.getTables = async (req, res) => {
 }
 
 
+exports.saveTables= async(req,res)=>{
+
+
+    const fixedData= Array.from({length: 4}, () => req.body.data.splice(0,4))
+  
+
+    fixedData.map(async (player)=>{
+
+        const name=player[0]
+        const res=player[1]
+        const points=player[2]
+        const trophies=player[3]
+
+        const playerToUpdate= await Player.findOne({where: {name: name}})
+        await (await Table.findByPk(playerToUpdate.id)).update({resources: res,points: points,trophies:trophies})
+
+
+
+    })
+
+    res.status(200).end()
+}
 
 
