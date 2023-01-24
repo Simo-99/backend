@@ -28,8 +28,9 @@ exports.getTables = async (req, res) => {
 exports.saveTables= async(req,res)=>{
 
 
-    const fixedData= Array.from({length: 4}, () => req.body.data.splice(0,4))
-  
+    const fixedData= Array.from({length: req.body.data.length /4 }, () => req.body.data.splice(0,4))
+    
+    console.log(fixedData)
 
     fixedData.map(async (player)=>{
 
@@ -39,13 +40,10 @@ exports.saveTables= async(req,res)=>{
         const trophies=player[3]
 
         const playerToUpdate= await Player.findOne({where: {name: name,inside:1}})
-        if (playerToUpdate != null ) 
-            try{
-                await (await Table.findByPk(playerToUpdate.id)).update({resources: res,points: points,trophies:trophies})
-            }catch(error){
+        if (playerToUpdate != null && isNumber(res) && isNumber(points) && isNumber(trophies)) 
+            await (await Table.findByPk(playerToUpdate.id)).update({resources: res,points: points,trophies:trophies})
             
-            }   
-
+        
 
     })
 
@@ -53,3 +51,4 @@ exports.saveTables= async(req,res)=>{
 }
 
 
+function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
